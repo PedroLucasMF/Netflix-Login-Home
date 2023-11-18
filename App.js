@@ -4,6 +4,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Login';
+import Principal from './screens/Principal';
+import FilmesStack from './screens/FilmesStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +14,7 @@ export default function App() {
     <>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="login" component={Login} options={{ title: 'Login' }} />
+        <Stack.Screen name="Netflix" component={FilmesStack} />
       </Stack.Navigator>
     </NavigationContainer>
     </>

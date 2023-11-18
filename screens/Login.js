@@ -2,8 +2,9 @@ import React from 'react'
 import { ScrollView, View } from 'react-native'
 import { Button, Card, Text, TextInput } from 'react-native-paper'
 import { StyleSheet } from 'react-native-web'
+import Principal from './Principal'
 
-const Login = (Navigator) => {
+const Login = ({navigation}) => {
 
   
   return (
@@ -22,13 +23,7 @@ const Login = (Navigator) => {
             placeholder="Password"
             secureTextEntry
           />
-          <Button style={styles.buttao}><Text style={styles.bigBlue}>Entrar</Text></Button>
-
-
-
-
-
-
+          <Button style={styles.buttao} onPress={() => navigation.push('Principal')}><Text style={styles.bigBlue}>Entrar</Text></Button>
         </View>
       </ScrollView>
     </>
