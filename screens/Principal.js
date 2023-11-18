@@ -23,38 +23,27 @@ const Principal = () => {
     })
   }, [])
 
-  const renderImagesRow = (data) => {
-    return (
-      <FlatList
-        data={data}
-        horizontal
-        renderItem={({ item }) => (
-          <View style={styles.card} key={item.id}>
-            <Image style={styles.filmesimg} source={{ uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}` }} />
-          </View>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
-    );
-  };
-
   return (
     <>
       <ScrollView>
         
-        <View style={styles.rowi}>
-          <ScrollView horizontal>
+        
+         
+            <View style={styles.rowi}> 
+            <ScrollView horizontal>
           <Text style={styles.title}>Filmes Populares</Text>
           {filmes.map(item => (
+            <View>
             <Card style={styles.card} key={item.id}>
               <Image style={styles.filmesimg} source={{ uri: 'https://image.tmdb.org/t/p/w500/' + item.backdrop_path }} />
-            </Card>
-          ))}
-          </ScrollView>
-        </View>
+            </Card></View>
+          ))}  </ScrollView> 
+          </View>
+        
+       
     
 
-        <View>
+        <View style={styles.rowi}>
           <Text style={styles.title}>Series Populares</Text>
           {series.map(item => (
             <Card style={styles.card} key={item.id}>

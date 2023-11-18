@@ -6,7 +6,7 @@ const apiFilmes = axios.create({
         language: 'pt-BR'
     },
     headers: {
-        Authorization: 'Bearer ' 
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YmQ0N2EyZDhhOTZhNTQ4MjNhMTY5MjU5YmZlODcxZiIsInN1YiI6IjY1NTZhNTY3YjU0MDAyMTRjZjM4YzNjYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B9lr3NuqrgDUs8QZj9NHLZoPUFHkCflT5hp_YZqU9sE' 
     }
 })
 
