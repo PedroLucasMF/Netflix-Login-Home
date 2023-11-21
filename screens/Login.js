@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     backgroundColor: '#000',
-    height: 605,
+    height: 540,
   },
   buttao: {
     marginTop: 10,

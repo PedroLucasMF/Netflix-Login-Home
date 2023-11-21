@@ -1,86 +1,127 @@
-import React, { useEffect, useState } from 'react'
-import { ScrollView, View } from 'react-native'
-import apiFilmes from '../service/apiFilmes'
-import { Card, Text } from 'react-native-paper'
-import { Image, StyleSheet } from 'react-native-web'
+import React, { useEffect, useState } from "react";
+import { ScrollView, View } from "react-native";
+import apiFilmes from "../service/apiFilmes";
+import { Card, Text } from "react-native-paper";
+import { Image, StyleSheet } from "react-native-web";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-const Principal = () => {
-
-  const [series, setSeries] = useState([])
-
-  useEffect(() => {
-    apiFilmes.get('/tv/popular').then(resultado => {
-      setSeries(resultado.data.results)
-    })
-  }, [])
-
-  const [filmes, setFilmes] = useState([])
+const Principal = ({ navigation }) => {
+  const [series, setSeries] = useState([]);
+  const [favs, setFAv] = useState([]);
+  const [filmes, setFilmes] = useState([]);
 
   useEffect(() => {
-    apiFilmes.get('/movie/popular').then(resultado => {
-      setFilmes(resultado.data.results)
-    })
-  }, [])
+    apiFilmes.get("/tv/popular").then((resultado) => {
+      setSeries(resultado.data.results);
+    });
+
+    AsyncStorage.getItem("filmes-Fav").then((resultado) => {
+      const fav = JSON.parse(resultado) || [];
+      setFAv(fav);
+    });
+
+    apiFilmes.get("/movie/popular").then((resultado) => {
+      setFilmes(resultado.data.results);
+    });
+  }, []);
 
   return (
     <>
       <ScrollView>
-        
-        
-         
-            <View style={styles.rowi}> 
-            <ScrollView horizontal>
+        <View style={styles.rowi}>
           <Text style={styles.title}>Filmes Populares</Text>
-          {filmes.map(item => (
-            <View>
-            <Card style={styles.card} key={item.id}>
-              <Image style={styles.filmesimg} source={{ uri: 'https://image.tmdb.org/t/p/w500/' + item.backdrop_path }} />
-            </Card></View>
-          ))}  </ScrollView> 
-          </View>
-        
-       
-    
+          <ScrollView horizontal>
+            {"\n"}
+            {filmes.map((item) => (
+              <View>
+                <Card
+                  style={styles.card}
+                  key={item.id}
+                  onPress={() => navigation.push("Item", { id: item.id })}
+                >
+                  <Image
+                    style={styles.filmesimg}
+                    source={{
+                      uri:
+                        "https://image.tmdb.org/t/p/w500/" + item.backdrop_path,
+                    }}
+                  />
+                </Card>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
 
         <View style={styles.rowi}>
           <Text style={styles.title}>Series Populares</Text>
-          {series.map(item => (
-            <Card style={styles.card} key={item.id}>
-              <Image style={styles.filmesimg} source={{ uri: 'https://image.tmdb.org/t/p/w500/' + item.backdrop_path }} />
-            </Card>
-          ))}
+          <ScrollView horizontal>
+            {"\n"}
+            {series.map((item) => (
+              <View>
+                <Card style={styles.card} key={item.id} onPress={() => navigation.push("Item", { id: item.id })}>
+                  <Image
+                    style={styles.filmesimg}
+                    source={{
+                      uri:
+                        "https://image.tmdb.org/t/p/w500/" + item.backdrop_path,
+                    }}
+                  />
+                </Card>
+              </View>
+            ))}
+          </ScrollView>
         </View>
 
+        <View style={styles.rowi}>
+          <Text style={styles.title}>Favoritos</Text>
+          <ScrollView horizontal>
+            {"\n"}
+            {favs.map((item) => (
+              <View>
+                <Card style={styles.card} key={item.id}>
+                  <Image
+                    style={styles.filmesimg}
+                    source={{
+                      uri:
+                        "https://image.tmdb.org/t/p/w500/" + item.foto,
+                    }}
+                  />
+                </Card>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
       </ScrollView>
-
-
-
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   filmesimg: {
-    widht: 20,
-    height: 100,
+    width: 200,
+    height: 150,
+    imageStyle: "fit",
+    borderRadius: 10,
   },
   card: {
-    widht: 20,
-    height: 100,
-    marginLeft: 80,
-    marginRight: 80,
-    marginTop: 10,
-    marginBottom: 10,
+    width: 200,
+    height: 150,
+    margin: 20,
   },
   rowi: {
-    backgroundColor: '#050505',
+    backgroundColor: "#050505",
+    height: 250,
+    border: 1,
+    borderColor: "#050505",
+    borderStyle: "solid",
   },
   title: {
     fontSize: 20,
-    color: '#fffefa',
-    fontWeight: 'bold'
-  }
+    color: "#fffefa",
+    fontWeight: "bold",
+    width: "100%",
+    textAlign: "center",
+  },
 });
 
-export default Principal
+export default Principal;
