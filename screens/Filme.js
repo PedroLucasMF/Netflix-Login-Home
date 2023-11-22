@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Avatar, Button, Card, Icon, IconButton } from "react-native-paper";
 import apiFilmes from "../service/apiFilmes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,26 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Filme = ({ navigation, route }) => {
   const [filme, setFilme] = useState({});
   const [atores, setAtores] = useState([]);
-
   
-
-
-
-  function salvar(dados) {
-    AsyncStorage.getItem("filmes-Fav").then((resultado) => {
-      const fav = JSON.parse(resultado) || [];
-
-      fav.push({id: filme.id, foto: filme.backdrop_path})
-        console.log(fav);
-      console.log(filme)
-
-      AsyncStorage.setItem("filmes-Fav", JSON.stringify(fav));
-      
-
-    //   navigation.goBack();
-    });
-  }
-
 
   useEffect(() => {
     const id = route.params.id;
@@ -43,6 +24,47 @@ const Filme = ({ navigation, route }) => {
       setAtores(resultado.data.cast);
     });
   }, []);
+
+  function salvar(dados) {
+    AsyncStorage.getItem("filmes-Fav").then((resultado) => {
+      const fav = JSON.parse(resultado) || [];
+
+      fav.push({ id: filme.id, foto: filme.backdrop_path })
+      console.log(fav);
+      console.log(filme)
+
+      AsyncStorage.setItem("filmes-Fav", JSON.stringify(fav));
+      navigation.goBack();
+
+
+    });
+  }
+
+  function remover(filmeId) {
+    AsyncStorage.getItem('filmes-Fav').then((resultado) => {
+      const fav = JSON.parse(resultado) || [];
+
+      // Encontrar o índice do filme a ser removido pelo ID
+      const index = fav.findIndex(item => item.id === filmeId);
+      console.log(index)
+
+      if (index == -1) {
+        // Remover o filme da lista de favoritos
+        fav.splice(index, 1);
+        console.log(`Filme com ID ${filmeId} removido da lista de favoritos.`);
+
+        // Atualizar a lista de favoritos no AsyncStorage
+        AsyncStorage.setItem('filmes-Fav', JSON.stringify(fav));
+      } else {
+        console.log(`Filme com ID ${filmeId} não encontrado na lista de favoritos.`);
+      }
+      navigation.goBack();
+    });
+
+
+  }
+
+
 
   return (
     <>
@@ -62,36 +84,41 @@ const Filme = ({ navigation, route }) => {
               <Text variant="bodyMedium" style={styles.desc}>
                 {filme.overview}
               </Text>
-             
+
             </Card.Content>
             <Card.Actions style={styles.acbtt}>
-               <IconButton style={styles.btt} icon="star-outline" onPress={salvar}></IconButton>
-               {/* star-face */}
-               
+              if (id = fav.id) {
+                <IconButton style={styles.btt} icon="star" onPress={remover}></IconButton>
+              }
+
+              else {
+                <IconButton style={styles.btt} icon="star-outline" onPress={salvar}></IconButton>
+              }
+
             </Card.Actions>
           </Card>
-        
-        <View>
-          <ScrollView horizontal>
-          {atores.map((item) => (
-            <Card style={styles.ator}
-              key={item.id}
-            >
-              <Card.Title titleStyle={{ color: "#fffefa", width: "100%", height: 20 }}
-                title={item.name}
-                left={(props) => (
-                  <Avatar.Image
-                    {...props}
-                    size={44}
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/w500${item.profile_path}`,
-                    }}
+
+          <View>
+            <ScrollView horizontal>
+              {atores.map((item) => (
+                <Card style={styles.ator}
+                  key={item.id}
+                >
+                  <Card.Title titleStyle={{ color: "#fffefa", width: "100%", height: 20 }}
+                    title={item.name}
+                    left={(props) => (
+                      <Avatar.Image
+                        {...props}
+                        size={44}
+                        source={{
+                          uri: `https://image.tmdb.org/t/p/w500${item.profile_path}`,
+                        }}
+                      />
+                    )}
                   />
-                )}
-              />
-            </Card>
-          ))}
-          </ScrollView>
+                </Card>
+              ))}
+            </ScrollView>
           </View>
 
 
@@ -133,7 +160,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 
-  ator:{
+  ator: {
     margin: 5,
     width: 220,
     backgroundColor: "#050505"

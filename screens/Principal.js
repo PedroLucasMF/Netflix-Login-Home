@@ -5,11 +5,13 @@ import { Card, Text } from "react-native-paper";
 import { Image, StyleSheet } from "react-native-web";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Principal = ({ navigation }) => {
+
+const Principal = ({ navigation, route }) => {
   const [series, setSeries] = useState([]);
   const [favs, setFAv] = useState([]);
   const [filmes, setFilmes] = useState([]);
 
+  
   useEffect(() => {
     apiFilmes.get("/tv/popular").then((resultado) => {
       setSeries(resultado.data.results);
@@ -78,7 +80,7 @@ const Principal = ({ navigation }) => {
             {"\n"}
             {favs.map((item) => (
               <View>
-                <Card style={styles.card} key={item.id}>
+                <Card style={styles.card} key={item.id} onPress={() => navigation.push("Item", { id: item.id })}>
                   <Image
                     style={styles.filmesimg}
                     source={{
