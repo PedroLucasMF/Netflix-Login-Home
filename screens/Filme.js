@@ -55,10 +55,11 @@ const Filme = ({ navigation, route }) => {
 
         // Atualizar a lista de favoritos no AsyncStorage
         AsyncStorage.setItem('filmes-Fav', JSON.stringify(fav));
+        navigation.goBack();
       } else {
         console.log(`Filme com ID ${filmeId} não encontrado na lista de favoritos.`);
       }
-      navigation.goBack();
+      
     });
 
 
