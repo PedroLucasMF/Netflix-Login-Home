@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import apiFilmes from "../service/apiFilmes";
-import { Card, Text } from "react-native-paper";
+import { Button, Card, Text } from "react-native-paper";
 import { Image, StyleSheet } from "react-native-web";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -11,7 +11,7 @@ const Principal = ({ navigation, route }) => {
   const [favs, setFAv] = useState([]);
   const [filmes, setFilmes] = useState([]);
 
-  
+
   useEffect(() => {
     apiFilmes.get("/tv/popular").then((resultado) => {
       setSeries(resultado.data.results);
@@ -93,6 +93,17 @@ const Principal = ({ navigation, route }) => {
             ))}
           </ScrollView>
         </View>
+        <View style={styles.rowi2}>
+            <ScrollView horizontal>
+
+              <Button style={styles.buttao} onPress={() => navigation.push("Pagamentos")} >Pagamento</Button>
+              <Button style={styles.buttao}>Cadastrar Filmes e Series</Button>
+              <Button style={styles.buttao}>Atores</Button>
+              <Button style={styles.buttao}>Comentarios</Button>
+              
+
+            </ScrollView>
+        </View>
       </ScrollView>
     </>
   );
@@ -117,12 +128,29 @@ const styles = StyleSheet.create({
     borderColor: "#050505",
     borderStyle: "solid",
   },
+  rowi2: {
+    backgroundColor: "#050505",
+    height: 80,
+    border: 1,
+    borderColor: "#050505",
+    borderStyle: "solid",
+  },
   title: {
     fontSize: 20,
     color: "#fffefa",
     fontWeight: "bold",
     width: "100%",
     textAlign: "center",
+  },
+  buttao: {
+    margin: 10,
+    borderWidth: 2,
+    borderColor: "#5c5c5c", // Grey border color
+    borderRadius: 1,
+    paddingHorizontal: 80,
+    paddingVertical: 2,
+    backgroundColor: "#373738",
+    height: 50,
   },
 });
 
