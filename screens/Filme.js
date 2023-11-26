@@ -34,7 +34,7 @@ const Filme = ({ navigation, route }) => {
       console.log(filme)
 
       AsyncStorage.setItem("filmes-Fav", JSON.stringify(fav));
-      navigation.goBack();
+      navigation.push("Principal");
 
 
     });
