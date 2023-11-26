@@ -96,10 +96,10 @@ const Principal = ({ navigation, route }) => {
         <View style={styles.rowi2}>
             <ScrollView horizontal>
 
-              <Button style={styles.buttao} onPress={() => navigation.push("Pagamentos")} >Pagamento</Button>
-              <Button style={styles.buttao}>Cadastrar Filmes e Series</Button>
-              <Button style={styles.buttao}>Atores</Button>
-              <Button style={styles.buttao}>Comentarios</Button>
+              <Button style={styles.buttao} onPress={()=> navigation.push("Cartões")} >Pagamento</Button>
+              <Button style={styles.buttao} onPress={()=> navigation.push("Filme/Serie")}>Cadastros F&S</Button>
+              <Button style={styles.buttao} onPress={()=> navigation.push("Atores")}>Atores</Button>
+              <Button style={styles.buttao} onPress={()=> navigation.push("Comentarios")} >Comentarios</Button>
               
 
             </ScrollView>
